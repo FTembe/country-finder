@@ -104,6 +104,9 @@ a:hover{
 	h1{
 		font-size: 1.9rem;
 	}
+	h1 span{
+		font-size: 1.9rem;
+	}
 	.panel__data{
 		max-height: 500px;
 	}
@@ -130,7 +133,32 @@ a:hover{
 
 @media (min-width: 1400px) {
 }
-
+.box{
+	width: 90px;
+	height: 90px;
+	border:  solid .5rem #f8f9fa;
+	border-top: solid .5rem #0275d8;
+	border-radius: 50%;
+	animation: rotateX .6s infinite ease-in-out;
+}
+@keyframes rotateX{
+	from{
+		transform: rotate(0);
+	}to{
+		transform: rotate(360deg);
+	}
+}	
+.panel__data{	position: relative;
+}
+.box{
+	width: 90px;
+	height: 90px;
+	margin:0 auto;
+	border:  solid .5rem #f8f9fa;
+	border-top: solid .5rem #0275d8;
+	border-radius: 50%;
+	animation: rotateX .6s infinite ease-in-out;
+}
 </style>
 <body>
 	<section>
@@ -138,7 +166,8 @@ a:hover{
 		<span>(About country typed)</span>
 		<input focus type="text" placeholder="Type here the country name">
 		<div class="panel"></div>
-		<div class="panel__data">
+		<div class="panel__data  ">
+	
 		</div>
 	</section>
 </body>
@@ -151,7 +180,7 @@ a:hover{
 
 	input.addEventListener('keyup',function(){	
 		about()
-		if( this.value.length>1){
+		if( this.value.length>2){
 			panel.innerHTML+=`<ul>`;
 			
 			fetch(`${link}name/${this.value}`).then((response)=>response.json())
@@ -177,11 +206,13 @@ a:hover{
 
 	function about(country= null){
 		let data='';
+
 		if(country){
-			
+		
 			fetch(`${link}name/${country}`).then((response)=>response.json())
 			.then((response)=>{
 				panel.innerHTML= '';
+
 				input.value= country;
 				panel__data.innerHTML+=`<li><b>Country:</b> ${response[0].name} - ${response[0].cioc}<img style="width:45px; float:right" src="${response[0].flag}"></li>`;
 				panel__data.innerHTML+=`<li><b>Capital:</b> ${response[0].capital}</li>`;
