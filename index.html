@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Country Finder Using restcountries api</title>
+</head>
+<style type="text/css">
+*{
+	margin: 0;
+	padding: 0;
+	outline: none;
+	overflow-x: hidden;
+	box-sizing: border-box;
+	font-family: cursive;
+	transition: all .6s;
+}
+body{
+	width: 100%;
+	height: 100vh;
+	
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+section{
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+input{
+	font-size: 0.8rem;
+	padding: .7rem 1rem ;
+	box-sizing: 1px 13px 333px #111;
+	border-radius: 0;
+	border: none;
+	margin-top: 2rem;
+	border-bottom: solid 1px #111;
+}
+.panel{	
+	border-radius: 0;
+	padding: 0 .6rem;
+	margin: 0;
+	border: none;
+	background: #fff;
+	max-height: 300px;
+}
+.panel__data li{
+	font-family: sans-serif;
+	margin-bottom: .4rem;
+	padding:0 .6rem;
+}
+.panel__data{
+
+	border-radius: 0;
+	margin-top: 1.3rem;
+	border: none;
+	background: #fff;
+	max-height: 300px;
+}
+
+h1{
+	font-weight: 500;
+	font-size: 3rem;
+	color: #252b2c;
+	margin-bottom: .5rem;
+}
+h1 span{
+	color: #0275d8;
+}
+span:not(h1 span){
+	color: #888;
+	font-size: 14px;
+}
+li{
+	list-style: none;
+}
+li a{
+	text-decoration: none;
+	font-size: 14px;
+	color: #222;
+	padding: 0 .6rem;
+	transition: all .6s;
+}
+a:hover{
+	
+	color:#0275d8;
+}
+.text-center{
+	text-align: center;
+
+}
+
+/*Small devices (landscape phones, 576px and up)*/
+@media (max-width: 576px) {
+	input, .panel, .panel__data{
+		width: 90%;
+	}
+	h1{
+		font-size: 1.9rem;
+	}
+	.panel__data{
+		max-height: 310px;
+	}
+}
+
+/* Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) { input, .panel, .panel__data{
+		width: 40%;
+	} }
+
+/* Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) { ... }
+
+/* X-Large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) { ... }
+
+/* XX-Large devices (larger desktops, 1400px and up)*/
+@media (min-width: 1400px) { ... }
+
+
+</style>
+<body>
+	<section>
+		<h1>Country <span>Finder.</span></h1>
+		<span>(About country typed)</span>
+		<input focus type="text" placeholder="Type here the country name">
+		<div class="panel"></div>
+		<div class="panel__data">
+		</div>
+	</section>
+</body>
+<script type="text/javascript">
+	let link = "https://restcountries.eu/rest/v2/",
+	panel=document.querySelector('.panel'),
+	panel__data=document.querySelector('.panel__data'),
+	input=document.querySelector('input'),
+	data='';
+
+	input.addEventListener('keyup',function(){	
+		about()
+		if( this.value.length>2){
+			panel.innerHTML+=`<ul>`;
+			
+			fetch(`${link}name/${this.value}`).then((response)=>response.json())
+			.then((response)=>{
+				if(response.status!=404){
+					data ='';
+					response.forEach((value)=>{
+						data+=`<li><a href="#" onclick="about('${value.name}')">${value.name}</a></li>`;
+					})
+				}else{
+					data =`<li>${response.message}</li>`;
+				}
+			})
+			.catch((error)=>console.log('error' + error))
+			
+		}else{
+			data='';
+		}
+		panel.innerHTML= '';
+		panel.innerHTML=data;
+		panel.innerHTML+=`</ul>`;
+	})
+about('china')
+	function about(country= null){
+let data='';
+		if(country){
+			
+			fetch(`${link}name/${country}`).then((response)=>response.json())
+			.then((response)=>{
+				console.log(response)
+				panel.innerHTML= '';
+				input.value= country;
+				panel__data.innerHTML+=`<li><b>Country:</b>${response[0].name} <img style="width:30px; float:right" src="${response[0].flag}"></li>`;
+				panel__data.innerHTML+=`<li><b>Capital:</b>${response[0].capital}</li>`;
+				panel__data.innerHTML+=`<li><b>Language:</b>${response[0].languages[0].name}</li>`;
+				panel__data.innerHTML+=`<li><b>Currencie:</b>${response[0].currencies[0].name} - ${response[0].currencies[0].code}  </li>`;
+				panel__data.innerHTML+=`<li><b>Region:</b>${response[0].region}</li>`;
+				panel__data.innerHTML+=`<li><b>Subregion:</b>${response[0].subregion}</li>`;
+				panel__data.innerHTML+=`<li><b>Population:</b>${response[0].population}</li>`;
+				panel__data.innerHTML+=`<li><b>Calling Code:</b>( ${response[0].callingCodes} )</li>`;
+
+				panel__data.innerHTML+=`<li class="text-center">Translations <hr> </li>`;
+				panel__data.innerHTML+=`<li>
+					<b>EN:</b> ${response[0].name} 
+					<b>PT:</b> ${response[0].translations.pt} 
+					<b>IT:</b> ${response[0].translations.it} 
+					<b>FR:</b> ${response[0].translations.fr} 
+					<b>ES:</b> ${response[0].translations.es} 
+
+				</li>`;
+			})
+			.catch((error)=>console.log('error' + error));
+
+			panel__data.innerHTML=data;
+		}else{
+			panel__data.innerHTML=data;
+		}
+	}
+</script>
+</html>
