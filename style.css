@@ -1,0 +1,159 @@
+*{
+	margin: 0;
+	padding: 0;
+	outline: none;
+	overflow-x: hidden;
+	box-sizing: border-box;
+	font-family: 'Montserrat',sans-serif;
+	transition: all .6s;
+	font-size: 14px;
+}
+body{
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+}
+section{
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+input{
+	font-size:1rem;
+	padding: .7rem 1rem ;
+	border-radius: 0;
+	border: none;
+	margin-top: 2rem;
+	border-bottom: solid 1.3px #112;
+}
+
+h1{
+	font-weight: 500;
+	font-size: 3rem;
+	color: #252b2c;
+	margin-bottom: .2rem;
+}
+h1 span{
+	font-size: 3rem;
+	color: #0275d8;
+}
+span:not(h1 span){
+	color: #888;
+	font-size: 12px;
+}
+li{
+	list-style: none;
+}
+li a{
+	text-decoration: none;
+	font-size: 14px;
+	color: #222;
+	padding: 0 .6rem;
+	transition: all .6s;
+}
+a:hover{
+	
+	color:#0275d8;
+}
+hr{
+	height: 1px !important;
+	width: 100% !important;
+	background-color: #111;
+}
+.panel{	
+	border-radius: 0;
+	padding: 0 .6rem;
+	margin: 0;
+	border: none;
+	background: #f8f9fa;
+	max-height: 300px;
+}
+.panel__data li{
+	font-family: sans-serif;
+	margin-bottom: .4rem;
+	padding:0 .6rem;
+}
+.panel__data{
+
+	border-radius: 0;
+	margin-top: 1.3rem;
+	border: none;
+	background: #fff;
+	max-height: 450px;
+}
+
+
+.text-center{
+	text-align: center;
+
+}
+
+/*Small devices (landscape phones, 576px and up)*/
+@media (max-width: 576px) {
+	input, .panel, .panel__data{
+		width: 90%;
+	}
+	h1{
+		font-size: 1.9rem;
+	}
+	h1 span{
+		font-size: 1.9rem;
+	}
+	.panel__data{
+		max-height: 500px;
+	}
+}
+
+
+@media (min-width: 768px) { 
+	input, .panel, .panel__data{
+		width: 90%;
+	} 
+}
+
+@media (min-width: 992px) {
+	input, .panel, .panel__data{
+		width: 90%;
+	}  
+}
+
+@media (min-width: 1200px) {
+	input, .panel, .panel__data{
+		width: 55%;
+	}  
+}
+
+@media (min-width: 1400px) {
+}
+.box{
+	width: 90px;
+	height: 90px;
+	border:  solid .5rem #f8f9fa;
+	border-top: solid .5rem #0275d8;
+	border-radius: 50%;
+	animation: rotateX .6s infinite ease-in-out;
+}
+@keyframes rotateX{
+	from{
+		transform: rotate(0);
+		}to{
+			transform: rotate(360deg);
+		}
+	}	
+	.panel__data{	position: relative;
+	}
+	.box{
+		width: 90px;
+		height: 90px;
+		margin:0 auto;
+		border:  solid .5rem #f8f9fa;
+		border-top: solid .5rem #0275d8;
+		border-radius: 50%;
+		animation: rotateX .6s infinite ease-in-out;
+	}
